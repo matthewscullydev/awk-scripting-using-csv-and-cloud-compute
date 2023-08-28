@@ -13,4 +13,5 @@ mkdir ws1
 gh repo create cs131.gut --public
 cd cs131/
 mkdir cs131
+wget www.github.com
 cd Desktop/
