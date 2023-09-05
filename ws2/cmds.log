@@ -1,0 +1,11 @@
+   41  cp /datasets/taxidata.tar.gz .
+   42  tar -xvf taxidata.tar.gz 
+   43  ls
+   44  cd taxidata/
+   45  ls
+   46  vim 2019-01.csv
+   63  cat *.csv | grep ".*,.*,\"2019-03-12.*" | tail -20 > results.txt; cat results.txt 
+   64  cat results.txt 
+   65  ls
+   66  history > cmds.log
+   
