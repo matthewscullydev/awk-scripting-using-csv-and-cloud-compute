@@ -1,0 +1,15 @@
+
+For this exercise I cd'd into the directory for taxidata, then I used cut with the delimiter key being a comma and selected the
+eigth column (pick up information) then input my file 2019-01 for jan and 2019-02 for feb. then I sorted the data and ran a uniq -c
+to keep count of the number of lines and finally i sorted that again with reverse order so that the most frequent orders are at the top
+of the file then I used head to get the top 3 entries.
+
+[matthew23fa@sjsu ~]$ cd taxidata/
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 8 2019-01.csv | sort | uniq -c | sort -k1,1nr | head -3
+ 332473 237.0
+ 323008 236.0
+ 312392 161.0
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 8 2019-02.csv | sort | uniq -c | sort -k1,1nr | head -3
+ 294584 237.0
+ 286773 161.0
+ 280640 236.0
