@@ -1,141 +1,49 @@
-#2
----
-I used pwd to output my current directory and recieved this dir:
-/mnt/scratch/matthew23fa
----
+problem #2
+pwd
 
-#3
----
-my UID is 1029 and my group is 1029(matthew23fa)
-uid=1029(matthew23fa) gid=1029(matthew23fa) groups=1029(matthew23fa)
+problem #3
+id
 
-#4
----
-[matthew23fa@sjsu ~]$ mkdir test
-[matthew23fa@sjsu ~]$ chmod u-x test
-[matthew23fa@sjsu ~]$ cd test
--bash: cd: test: Permission denied
-[matthew23fa@sjsu ~]$ touch /mnt/scratch/matthew23fa/test/file.txt
-touch: cannot touch '/mnt/scratch/matthew23fa/test/file.txt': Permission denied
-[matthew23fa@sjsu ~]$ ls -l /mnt/scratch/matthew23fa/test/
-total 0
+problem #4
+mkdir test
+chmod u-x test
+cd test
+touch /mnt/scatch/matthew23fa/file.txt
+ls -l /mnt/scratch/matthew23fa/test
+mkdir test2
+cd test2
+touch file.txt
+cd ..
+chmod u-x test2
+ls -l /mnt/scratch/matthew23fa/test2
 
-I created a directory called test then i removed the execute permissions from the file using chmod
+problem #5
 
-After doing this I was unable to write to the file but I was able to read from it using ls, as there was nothing in my directory I decided to test this by creating a new directory then adding a file and removing execute permissions.
+mkdir temp2
+mv temp2 temp3
+ls -a
+cp temp2 temp4
 
-Upon lsing the directory I was able to see the total of 1 files in the directory
+mkdir temp2
+cd temp2
+touch file.txt
+cd ..
+cp -r temp2 temp3
+cd temp3
+ls
 
-Using ls -a in my current directory showed me the difference in reading permissions for my user group when i removed them using chmod u-x
+problem #6
+cd /proc
+ls | grep -E "cpu|mem"
 
-[matthew23fa@sjsu ~]$ mkdir test2
-[matthew23fa@sjsu ~]$ cd test2
-[matthew23fa@sjsu test2]$ touch file.txt
-[matthew23fa@sjsu test2]$ cd ..
-[matthew23fa@sjsu ~]$ chmod u-x test2
-[matthew23fa@sjsu ~]$ ls /mnt/scratch/matthew23fa/test2/
-ls: cannot access '/mnt/scratch/matthew23fa/test2/file.txt': Permission denied
-file.txt
-[matthew23fa@sjsu ~]$ ls -l /mnt/scratch/matthew23fa/test2/
-ls: cannot access '/mnt/scratch/matthew23fa/test2/file.txt': Permission denied
-total 0
--????????? ? ? ? ?            ? file.txt
+problem #7
+cat meminfo | head
 
-#5
----
-matthew23fa@sjsu ~]$ mkdir temp2
-[matthew23fa@sjsu ~]$ mv temp2 temp3
-[matthew23fa@sjsu ~]$ ls -a
-.  ..  .bash_history  .config  file.txt  taxidata  temp3  .viminfo
-[matthew23fa@sjsu ~]$ cp temp2 temp4
-cp: cannot stat 'temp2': No such file or directory
----
-when I tried to mv the directory without creating a temp3 dir it successfully copied the directory to a new destination temp3 and removed the previous directory
+problem #8
+head cpuinfo
 
-I then experimented to see if I could cp to a nonexistent directory and it refused to do so unless I created a new one.
+problem #9
+cat system-release
 
-To recurssively copy every file in a directory you would have to create a new directory then use the cp -r command with the destination directory passed as the last argument
-
-I did this as follows:
-
-[matthew23fa@sjsu ~]$ mkdir temp2
-[matthew23fa@sjsu ~]$ cd temp2
-[matthew23fa@sjsu temp2]$ touch file.txt
-[matthew23fa@sjsu temp2]$ cd ..
-[matthew23fa@sjsu ~]$ cp -r temp2 temp3
-[matthew23fa@sjsu ~]$ cd temp3
-[matthew23fa@sjsu temp3]$ ls
-file.txt
-
-#6
-
-[matthew23fa@sjsu ~]$ cd /proc
-[matthew23fa@sjsu proc]$ ls | grep "cpu|mem"
-[matthew23fa@sjsu proc]$ ls | grep -E "cpu|mem"
-cpuinfo
-iomem
-meminfo
-
-using the grep command to find cpu and mem info I came to the conclusion that these were the memory and cpu information files and
-verified this by opening them with vim
-
-#7
-
-[matthew23fa@sjsu proc]$ cat meminfo | head
-MemTotal:       73080512 kB
-MemFree:         1852864 kB
-MemAvailable:   56101824 kB
-Buffers:          291904 kB
-Cached:         55114624 kB
-SwapCached:        16384 kB
-Active:         30229248 kB
-Inactive:       28776192 kB
-Active(anon):     385088 kB
-Inactive(anon):  4039424 kB
-
-There is 73080512 kBs of memory in the server.
-
-#8
-
-[matthew23fa@sjsu proc]$ head cpuinfo
-processor       : 0
-cpu             : POWER8 (architected), altivec supported
-clock           : 3425.000000MHz
-revision        : 2.1 (pvr 004b 0201)
-
-processor       : 1
-cpu             : POWER8 (architected), altivec supported
-clock           : 3425.000000MHz
-revision        : 2.1 (pvr 004b 0201)
-
-[matthew23fa@sjsu proc]$ tail cpuinfo
-processor       : 255
-cpu             : POWER8 (architected), altivec supported
-clock           : 3425.000000MHz
-revision        : 2.1 (pvr 004b 0201)
-
-timebase        : 512000000
-platform        : pSeries
-model           : IBM,8247-22L
-machine         : CHRP IBM,8247-22L
-MMU             : Hash
-
-When I used the command to see all the processors (cat cpuinfo) it listed out all 255 processors and their corresponding information.
-
-It appears that there are 255 processors on the machine of the POWER8 architecture with a clockspeed of 3425Mhz or 3.425Ghz
-
-#9
-
-[matthew23fa@sjsu etc]$ cat system-release
-Red Hat Enterprise Linux release 8.6 (Ootpa)
-
-Using this command I found out that the system was running Red Hat Linux.
-The system file containing this was system-release.
-
-
-#10
-
-[matthew23fa@sjsu etc]$ ls -last system-release
-0 lrwxrwxrwx. 1 root root 14 Apr  6  2022 system-release -> redhat-release
-
-This file has read write and execute permissions for all groups, user, group, and other.
+problem #10
+ls -last system-release
