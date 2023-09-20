@@ -1,0 +1,25 @@
+First I modified by .bashrc as such
+vim .bashrc
+
+alias l='ls -ltr'
+alias w='ls -l | wc'
+
+  l
+  w
+  tail -n 1 '2019-06.csv' | cut -d',' -f11 > 142.0-151.0.txt
+  cat 142.0-151.0.txt
+  tail -n 2 '2019-06.csv' | head -n 1 | cut -d',' -f11 > 140.0-163.0.txt
+  cat 140.0-163.0.txt
+
+  ---
+  after this I opened both files and put the text from the second file in the first file, 142.0-151.0.txt
+
+    I modified the text so it was formatted to be properly ran with the bc command as such
+
+    (inputfromfile1 + inputfromfile2)/2
+
+    I divided by two since the total number of enteries is two.
+
+  bc < 142.0-151.0.txt
+
+  this gave me an output of 7
