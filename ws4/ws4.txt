@@ -6,10 +6,10 @@ alias w='ls -l | wc'
 
   l
   w
-  tail -n 1 '2019-06.csv' | cut -d',' -f11 > 142.0-151.0.txt
-  cat 142.0-151.0.txt
-  tail -n 2 '2019-06.csv' | head -n 1 | cut -d',' -f11 > 140.0-163.0.txt
-  cat 140.0-163.0.txt
+  tail -n 1 '2019-06.csv' | cut -d',' -f11 > /FARE/142.0-151.0.txt
+  cat /FARE/142.0-151.0.txt
+  tail -n 2 '2019-06.csv' | head -n 1 | cut -d',' -f11 > /FARE/140.0-163.0.txt
+  cat /FARE/140.0-163.0.txt
 
   ---
   after this I opened both files and put the text from the second file in the first file, 142.0-151.0.txt

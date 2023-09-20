@@ -1,0 +1,15 @@
+vim .bashrc
+
+alias l='ls -ltr'
+alias w='ls -l | wc'
+
+  l
+  w
+  tail -n 1 '2019-06.csv' | cut -d',' -f11 > /FARE/142.0-151.0.txt
+  cat /FARE/142.0-151.0.txt
+  tail -n 2 '2019-06.csv' | head -n 1 | cut -d',' -f11 > /FARE/140.0-163.0.txt
+  cat /FARE/140.0-163.0.txt
+
+cd /FARE/
+vim 142.0-151.0.txt
+bc < 142.0-151.0.txt
