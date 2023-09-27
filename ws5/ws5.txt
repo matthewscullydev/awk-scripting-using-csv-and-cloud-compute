@@ -1,0 +1,26 @@
+First I used this script to save the top 100 dropoff locations from the pickup location 234.0
+
+cut -d "," -f 8,9 2019-08.csv | grep -E "234.0,.*" | cut -d "," -f 2 | sort -k1,1nr | uniq -c | sort -k1,1nr | head -n 100 | awk '{print $2}' > dolocations.txt
+
+Then I created a bash script with the following code to iterate through every entry in the txt file and search for entries with the same dropoff location in the august csv
+
+shellscript.sh
+---------------
+
+#!/bin/bash
+output_dir="/mnt/scratch/matthew23fa/taxidata/cs131/ws5/do234"
+mkdir -p "$output_dir"
+
+# Read and preprocess data from 2019-08.csv into an array
+mapfile -t augustdropoffs < <(cut -d "," -f 9 2019-08.csv)
+
+# Iterate through the patterns in dolocations.txt
+while IFS= read -r entry; do
+            # Use grep to filter lines in augustdropoffs array that match the current entry
+                grep -E "$entry" <<< "${augustdropoffs[@]}" > "$output_dir/$entry.txt"
+        done < "dolocations.txt"
+
+afterwards I use wc -w on each file requested to find out how many entries there are per requested dropoff location
+
+[matthew23fa@sjsu do234]$ wc -w 48.0.txt
+6073358 48.0.txt
