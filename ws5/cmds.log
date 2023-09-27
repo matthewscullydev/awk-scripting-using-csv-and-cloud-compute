@@ -21,3 +21,10 @@ while IFS= read -r entry; do
 
 [matthew23fa@sjsu do234]$ wc -w 48.0.txt
 6073358 48.0.txt
+
+[matthew23fa@sjsu do234]$ wc -w 1.0.txt
+6073358 1.0.txt
+[matthew23fa@sjsu do234]$ wc -w 3.0.txt
+wc: 3.0.txt: No such file or directory
+[matthew23fa@sjsu do234]$ wc -w 223.0.txt
+6073358 223.0.txt
