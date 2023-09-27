@@ -1,0 +1,52 @@
+
+First I need to extract the total amount in columns for the date in question "2019-05-11".
+
+To do so I first run a cut command on the column for the pickup dates and total amounts for days in the month on may.
+
+Then I run these through a grep command that searches for the date in question, 2019-05-11.
+
+With the output of grep I further cut this to only now have the column I desire for total amount.
+
+cut -d "," -f 2,17 2019-05.csv | grep -E "2019-05-11" | cut -d "," -f 2
+
+Now that I have the total amount column in an output file I can feed it into bc using the following command. It will take every entry in the file that I created with every amount value and substitute the new line character for a + character. bc will then add all of these up to get me a total.
+
+
+cat total_amounts_05-11.txt | tr '\n' '+' | sed
+'s/+$/\n/' | bc > totalnumber.txt
+
+next I use the wc commmand to get the total number of entries in the file to divide by. I need this value in order to computer the average
+
+wc -l total_amounts_05-11.txt | cut -d " " -f >> totalnumber.txt
+
+now with the total tum and the total number of entries I am ready to compute the average
+
+I use vim to modify the txt file containing the sum and number of entries
+
+I format it as follows:
+
+scale=2; 4509482.36/252413.00
+
+then to compute the average I cat this into a bc with a pipe
+
+cat totalamount.txt | bc
+
+resulting in 17.86 as an average amount
+
+#2
+
+ cut -d "," -f 2,17 2019-05.csv | grep -E '2019-05-11' | cut -d "," -f 2 | sort -k1,1nr | head -n 1
+
+for the second question I cut the categories for total amount and pickup date from the entries in may and then I grep'd them so that it would only output those with the date for may 11th 2019. Afterwards I used cut again to only get the total amount category from the output results.
+
+Finally, I used sort to organize them so the most valuable was first and used head to get the most valuable entry.
+
+#3
+
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 3,4 2019-05.csv | grep -E '.*,[3-9]+' | sort -k1,1nr | head -n 10
+
+With this chain of commands I first use the cut command to cut using the delimiter "," for the columns 3 and 4, the number of people per ride and the drop off location.
+
+Then I use grep to sort out the number of rides greater than 3. Afterwards I use the uniq and sort commands on the dropoff columns to sort the data in order for the top ten most popular entries.
+
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 3,4 2019-05.csv | grep -E '.*,[3-9]+' | sort -k1,1nr | head -n 10
