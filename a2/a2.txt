@@ -1,4 +1,4 @@
-
+#1
 First I need to extract the total amount in columns for the date in question "2019-05-11".
 
 To do so I first run a cut command on the column for the pickup dates and total amounts for days in the month on may.
