@@ -50,3 +50,22 @@ With this chain of commands I first use the cut command to cut using the delimit
 Then I use grep to sort out the number of rides greater than 3. Afterwards I use the uniq and sort commands on the dropoff columns to sort the data in order for the top ten most popular entries.
 
 [matthew23fa@sjsu taxidata]$ cut -d "," -f 3,4 2019-05.csv | grep -E '.*,[3-9]+' | sort -k1,1nr | head -n 10
+
+#4
+
+To determine the most popular pickup location for 2019-05-20 we first needed to cut the output of the csv file for the fields representing the pickup time, dropoff time, pickup location, and dropoff location.
+
+we then needed to use the sort command to srt the data with the first column (the column for pickup data)
+
+
+#5
+
+For this command I used cat to output every file in the directory with cat *.csv then I used cut to filter the 8th column for pickup location.
+
+After getting the pickup location I output it using the head command
+
+
+cat *.csv | cut -d "," -f 8 | sort | head -n 1
+
+
+this outputs the value for the most popular pickup location
