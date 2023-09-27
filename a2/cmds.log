@@ -20,16 +20,62 @@ I then append the line count and modify the totalnumber.txt file using vim to al
 [matthew23fa@sjsu taxidata]$ cut -d "," -f 2,17 2019-05.csv | grep -E '2019-05-11' | cut -d "," -f 2 | sort -k1,1nr | head -n 1
 1309.8
 
+
 #3
-[matthew23fa@sjsu taxidata]$ cut -d "," -f 3,4 2019-05.csv | grep -E '.*,[3-9]+' | sort -k1,1nr | head -n 10
-"2008-08-08 09:14:20.000000",4.0
-"2008-08-08 09:14:20.000000",4.0
-"2009-01-01 00:09:50.000000",5.0
-"2009-01-01 01:32:35.000000",3.0
-"2009-01-01 21:26:14.000000",3.0
-"2019-04-30 18:04:58.000000",5.0
-"2019-04-30 18:33:54.000000",5.0
-"2019-04-30 21:17:34.000000",5.0
-"2019-04-30 22:09:47.000000",5.0
-"2019-04-30 22:20:28.000000",5.0
-[matthew23fa@sjsu taxidata]$
+
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 4,9 2019-05.csv | grep -E '[3-9].0,.*'| cut -d "," -f 2 | sort -k1,1nr | uniq -c | sort -k1,1nr | head -n 10
+  39909 236.0
+  37140 237.0
+  36990 161.0
+  33678 230.0
+  28506 170.0
+  27895 162.0
+  27485 48.0
+  26782 142.0
+  25051 239.0
+  24609 234.0
+
+
+#4
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 2,8,9 2019-05.csv | grep -E "2019-05-20.*"| cut -d "," -f 2 | sort -k1,1nr | uniq -c | sort -k1,1nr| head -n 10
+  12002 237.0
+  10887 161.0
+  10543 236.0
+   9683 132.0
+   9523 162.0
+   8663 186.0
+   8089 138.0
+   7875 230.0
+   7515 170.0
+   7145 142.0
+
+
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 2,8,9 2019-05.csv | grep -E "2019-05-20.*,237.0,.*"| cut -d "," -f 2,3 | sort -k2,2nr | uniq -c | sort -k1,1nr | head -n 10
+   1911 237.0,236.0
+   1429 237.0,237.0
+    803 237.0,161.0
+    785 237.0,162.0
+    556 237.0,141.0
+    508 237.0,140.0
+    483 237.0,142.0
+    408 237.0,263.0
+    323 237.0,163.0
+    311 237.0,238.0
+
+#5
+
+[matthew23fa@sjsu taxidata]$ cat 2019-*.csv | cut -d "," -f 8 > output3.txt
+[matthew23fa@sjsu taxidata]$ sort -rn output3.txt | uniq -c | sort -k1,1nr | head -n 10
+
+3641682 237.0
+3450649 161.0
+3291351 236.0
+3046788 162.0
+3027440 186.0
+2900733 230.0
+2729607 132.0
+2678275 48.0
+2604081 170.0
+2534767 234.0
+
+after listening the top 10 most frequent pickup locations, it becomes clear that the most common pickup location is 237.0

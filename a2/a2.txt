@@ -39,33 +39,70 @@ resulting in 17.86 as an average amount
 
 for the second question I cut the categories for total amount and pickup date from the entries in may and then I grep'd them so that it would only output those with the date for may 11th 2019. Afterwards I used cut again to only get the total amount category from the output results.
 
-Finally, I used sort to organize them so the most valuable was first and used head to get the most valuable entry.
+Finally, I used sort to organize them so the most valuable was first and used head to get the most valuable entry which is 1309.8.
 
 #3
 
-[matthew23fa@sjsu taxidata]$ cut -d "," -f 3,4 2019-05.csv | grep -E '.*,[3-9]+' | sort -k1,1nr | head -n 10
 
-With this chain of commands I first use the cut command to cut using the delimiter "," for the columns 3 and 4, the number of people per ride and the drop off location.
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 4,9 2019-05.csv | grep -E '[3-9].0,.*'| cut -d "," -f 2 | sort -k1,1nr | uniq -c | sort -k1,1nr | head -n 10
+  39909 236.0
+  37140 237.0
+  36990 161.0
+  33678 230.0
+  28506 170.0
+  27895 162.0
+  27485 48.0
+  26782 142.0
+  25051 239.0
+  24609 234.0
 
-Then I use grep to sort out the number of rides greater than 3. Afterwards I use the uniq and sort commands on the dropoff columns to sort the data in order for the top ten most popular entries.
 
-[matthew23fa@sjsu taxidata]$ cut -d "," -f 3,4 2019-05.csv | grep -E '.*,[3-9]+' | sort -k1,1nr | head -n 10
+With this chain of commands I first cut the columns for number of customers (4) and dropoff locations (9). Then I grep for customers greater than 3. After which I cut the field for the dropoff locations and sort and count each entry by number of occurences. Then I output the top ten entries in the sorted list.
+
+This gives me the ten most popular dropoff locations for rides with more than 3 customers.
 
 #4
 
-To determine the most popular pickup location for 2019-05-20 we first needed to cut the output of the csv file for the fields representing the pickup time, dropoff time, pickup location, and dropoff location.
+To determine the most popular pickup location for 2019-05-20 we first needed to cut the output of the csv file for the fields representing the pickup time, pickup location, and dropoff location.
 
-we then needed to use the sort command to srt the data with the first column (the column for pickup data)
+Next I used the grep command to find pickup dates occuring on may 20th 2019. Then I used the cut command to take the second field of output ( the pickup locations ) from may 20th 2019.
 
+After which I pipe to a sort command, then to a uniq -c command to get the respective counts per entry. Finally I used to head to output the most popular pickup location:
+
+237.0
+
+Now I need to find the most popular dropoff locations for rides starting with a pickup location 237.
+
+
+I did this by modifying our grep from earlier to make it look for pickup locations matching 237.0 then sorting and counting every entry for dropoff date and ordering by the most frequently appearing.
+
+[matthew23fa@sjsu taxidata]$ cut -d "," -f 2,8,9 2019-05.csv | grep -E "2019-05-20.*,237.0,.*"| cut -d "," -f 2,3 | sort -k2,2nr | uniq -c | sort -k1,1nr | head -n 10
+   1911 237.0,236.0
+   1429 237.0,237.0
+    803 237.0,161.0
+    785 237.0,162.0
+    556 237.0,141.0
+    508 237.0,140.0
+    483 237.0,142.0
+    408 237.0,263.0
+    323 237.0,163.0
+    311 237.0,238.0
+
+Thus we can see that the most popular dropoff location for the most popular pickup location on may 20th 2019 is 236.0.
+
+The most popular pickup location was deduced to be 237.0 and the most frequent route with a pickup location of 237.0 on may 20th 2019 had a drop off location of 236.0.
 
 #5
 
-For this command I used cat to output every file in the directory with cat *.csv then I used cut to filter the 8th column for pickup location.
+For this command I used cat to output every file in the directory with cat *.csv then I used cut to filter the 8th column for pickup location. I then output this to a txt file.
 
-After getting the pickup location I output it using the head command
-
-
-cat *.csv | cut -d "," -f 8 | sort | head -n 1
+After getting the pickup locations I sorted them then used the uniq command with the -c flag in order to count the number of entries per pickup location, then I piped this into a sorted list with the highest value at the top and sent the top ten entries to the command line output
 
 
-this outputs the value for the most popular pickup location
+cat *.csv | cut -d "," -f 8 | uniq -c | sort -k1,1nr > mostpopularpickup.txt
+
+
+[matthew23fa@sjsu taxidata]$ cat 2019-*.csv | cut -d "," -f 8 > output3.txt
+[matthew23fa@sjsu taxidata]$ sort -rn output3.txt | uniq -c | sort -k1,1nr | head -n 10
+
+After viewing the output it can easily be seen that 237.0 is the most popular pickup location. It has a total of 3641682 entries in the database.
