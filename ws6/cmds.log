@@ -1,0 +1,10 @@
+#1
+cut -d "," -f 1 2019-11.csv | sed -n '/2\.0/p' > sedoutput.txt
+
+
+#2
+sed 's/[:="]//g' 2019-11.csv > no-seperators.csv
+
+#3
+
+sed 's/\.[0-9]*//g' no-seperators.csv > no-fractions.csv
