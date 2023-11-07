@@ -1,27 +1,34 @@
+set border 2 front lt black linewidth 1.000 dashtype solid
+set boxwidth 0.5 absolute
+set style fill solid 0.50
+unset key
+set pointsize 0.5
 
+set datafile separator '\t'
 
-cat bashtest.sh
-#!/bin/sh
+set terminal pngcairo
+set out 'a3t3.svg'
 
-/* tail -n +2 2019-08.csv | awk -F ',' '$17 != "" { total[$8] += $17; count[$8] += 1 } END { for (loc in total) { avg = total[loc] / count[loc]; printf "%s,%.2f\n", loc, avg } }' | sort -t ',' -k 2,2nr | head -n 10 > a3.txt
-[matthew23fa@sjsu taxidata]$ chmod +rx bashtest.sh
-[matthew23fa@sjsu taxidata]$ ./bashtest.sh
-[matthew23fa@sjsu taxidata]$ cat a3.txt
-221.0,143.96
-1.0,95.84
-265.0,88.89
-5.0,87.17
-156.0,87.05
-23.0,74.49
-99.0,73.15
-176.0,70.70
-118.0,65.26
-10.0,62.05
-[matthew23fa@sjsu taxidata]$ chmod +rx awkscript.sh
-[matthew23fa@sjsu taxidata]$ ./awkscript.sh 2019-08.csv | tee -a a3.txt
-Location pair: 138.0 -> 15.0 Average total amount: 1762.97
+/* set style data boxplot
+set xticks passengers
+set yticks tip amount
+set autoscale y
 
-[matthew23fa@sjsu taxidata]$ awk -F ',' -v OFS='\t' '{print $4, $17;}' 2019-08.csv > a3problem3data.dat
-[matthew23fa@sjsu taxidata]$ vim newscript.awk
-[matthew23fa@sjsu taxidata]$ awk -F ',' -f newscript.awk 2019-08.csv > a3p3data.dat
-[matthew23fa@sjsu taxidata]$ vim a3p3data.dat
+plot 'box.dat' using 1:2
+#!/usr/local/bin/gnuplot -persist
+set style fill transparent solid 0.2 noborder
+set datafile separator ','
+
+set terminal svg 
+set out 'a3t4.svg'
+
+set title "Scatterplot correlation for distance travelled and total amount spent"
+
+set xlabel "distance travelled"
+set ylabel "total amount spent"
+set xrange [1:200]
+set yrange [1:900]
+set autoscale x
+set autoscale y
+
+plot 'a3scatter.dat' using 1:2 with circles lc rgb 'red'
