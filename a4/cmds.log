@@ -1,0 +1,42 @@
+# downloading dataset
+
+[matthew23fa@sjsu /]$ cd datasets/
+[matthew23fa@sjsu datasets]$ ls
+movie-data.zip  taxidata.tar.gz
+[matthew23fa@sjsu datasets]$ cp movie-data.zip ../mnt/scratch/matthew23fa/
+[matthew23fa@sjsu datasets]$ cd ../mnt/scratch/matthew23fa
+[matthew23fa@sjsu ~]$ ls
+movie-data.zip  taxidata
+[matthew23fa@sjsu ~]$ unzip movie-data.zip
+Archive:  movie-data.zip
+  inflating: movies.csv
+[matthew23fa@sjsu ~]$ ls
+movie-data.zip  movies.csv  taxidata
+[matthew23fa@sjsu ~]$ rm movie-data.zip
+[matthew23fa@sjsu ~]$ mkdir moviedata
+[matthew23fa@sjsu ~]$ mv movies.csv moviedata
+[matthew23fa@sjsu ~]$ ls
+moviedata  taxidata
+[matthew23fa@sjsu ~]$ cd moviedata
+[matthew23fa@sjsu moviedata]$ ls
+movies.csv
+[matthew23fa@sjsu moviedata]$
+
+# solving problem
+
+For this problem I first want to check if the files is in the directory I run the script in.
+
+I do this with a simple if loop and exit the scrit if it is not present
+
+Then I proceed to use a multi-expression sed statement to replace all the parts about the movies.csv that look off.
+
+
+In the original csv there is a return character present, '^M', I replace this using sed with a new line character for better readability.
+
+Then I notice that there is a vertical divider after the director's name for seemingly no reason, so I use sed to replace it with no symbol.
+
+Finally I decide to deal with the long line of whitespace present after the 3rd field. To do so I tell sed to not factor in the first row which defines the columns for the dataset, and I tell it to skip all fields aside from the relevant one. Then I tell it to replace the 17 characters of white space with nothing.
+
+The output is a much more legible csv which I save to formatted_movies.csv in the same directory.
+
+If I wanted to modify this in place I could use the -i flag for the sed command.
