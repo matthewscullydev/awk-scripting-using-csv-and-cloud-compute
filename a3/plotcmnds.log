@@ -22,3 +22,6 @@ cat bashtest.sh
 Location pair: 138.0 -> 15.0 Average total amount: 1762.97
 
 [matthew23fa@sjsu taxidata]$ awk -F ',' -v OFS='\t' '{print $4, $17;}' 2019-08.csv > a3problem3data.dat
+[matthew23fa@sjsu taxidata]$ vim newscript.awk
+[matthew23fa@sjsu taxidata]$ awk -F ',' -f newscript.awk 2019-08.csv > a3p3data.dat
+[matthew23fa@sjsu taxidata]$ vim a3p3data.dat
