@@ -1,5 +1,5 @@
 
-
+#1
 matthew23fa@sjsu taxidata]$ chmod +rx bashscript.sh
 [matthew23fa@sjsu taxidata]$ ./bashscript.sh
 [matthew23fa@sjsu taxidata]$ cat a3.txt
