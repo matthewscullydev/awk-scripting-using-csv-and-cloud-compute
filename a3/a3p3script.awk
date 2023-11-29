@@ -1,7 +1,3 @@
-
-# Save this code in a file named, for example, myscript.awk
-# Usage: awk -F ',' -f myscript.awk input_file.csv
-
 {
     pass = $4
     total = $17
