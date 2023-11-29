@@ -6,7 +6,7 @@ BEGIN {
 }
 
 {
-    # 46th column contains the software_used
+    # 43rd column contains the software_used
     software_used = $43
 
     # increment the count for the specific software used
